@@ -1,5 +1,5 @@
 from controlador.usuarios_controlador import autenticar_usuario, registrar_usuario
-from controlador.reservas_controlador import agregar_reserva, mostrar_reservas, eliminar_reserva, modificar_reserva
+from controlador.reservas_controlador import agregar_reserva, mostrar_reservas, eliminar_reserva
 from controlador.paquetes_controlador import agregar_paquete, mostrar_paquetes, eliminar_paquete, modificar_paquete
 from controlador.destinos_controlador import agregar_destino, mostrar_destinos, eliminar_destino, modificar_destino
 from pwinput import pwinput
@@ -104,9 +104,23 @@ def inicio():
                     precio_total = input()
                     agregar_paquete(nombre, descripcion, destinos, fecha_inicio, fecha_fin, precio_total)
                 elif op =="3":
-                    pass
+                    eliminar_paquete()
                 elif op =="4":
-                    pass
+                    print("Ingrese el nombre del paquete a modificar:")
+                    nombre = input()
+                    print("Ingrese el nuevo nombre del paquete:")
+                    nuevo_nombre = input()
+                    print("Ingrese la nueva descripción del paquete:")
+                    nueva_descripcion = input()
+                    print("Ingrese los nuevos destinos del paquete:")
+                    nuevos_destinos = input()
+                    print("Ingrese la nueva fecha de inicio del paquete:")
+                    nueva_fecha_inicio = input()
+                    print("Ingrese la nueva fecha de fin del paquete:")
+                    nueva_fecha_fin = input()
+                    print("Ingrese el nuevo precio total del paquete:")
+                    nuevo_precio_total = input()
+                    modificar_paquete(nombre, nuevo_nombre, nueva_descripcion, nuevos_destinos, nueva_fecha_inicio, nueva_fecha_fin, nuevo_precio_total)
 
 
             elif op == "3":
@@ -116,7 +130,6 @@ def inicio():
                 print("1. Ver reservas")
                 print("2. Agregar reserva")
                 print("3. Eliminar reserva")
-                print("4. Modificar reserva")
                 print("")
                 op = input()
 
@@ -130,15 +143,9 @@ def inicio():
                     agregar_reserva(usuario.id, paquete_id, fecha_reserva)
                 elif op =="3":
                     eliminar_reserva()
-                elif op =="4":
-                    pass
+                
         else:
             print("Usuario o contraseña incorrectos")
-
-    
-    
-    
-    
     
     elif opcion == "2":
         print("Ingrese su nombre:")

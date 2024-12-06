@@ -36,3 +36,28 @@ def verificar_disponibilidad(fecha_inicio, fecha_fin):
     
     conexion.close()
     return paquetes_disponibles
+
+def eliminar_paquete(id):
+    conexion = conectar()
+    cursor = conexion.cursor()
+    
+    cursor.execute('''
+    DELETE FROM Paquetes WHERE id = %s
+    ''', (id,))
+    
+    conexion.commit()
+    conexion.close()
+
+def modificar_paquete(id, nombre, descripcion, destinos, fecha_inicio, fecha_fin, precio_total):
+    conexion = conectar()
+    cursor = conexion.cursor()
+    
+    destinos_str = ",".join(map(str, destinos))
+    
+    cursor.execute('''
+    UPDATE Paquetes SET nombre = %s, descripcion = %s, destinos = %s, fecha_inicio = %s, fecha_fin = %s, precio_total = %s
+    WHERE id = %s
+    ''', (nombre, descripcion, destinos_str, fecha_inicio, fecha_fin, precio_total, id))
+    
+    conexion.commit()
+    conexion.close()
