@@ -36,7 +36,7 @@ def crear_tablas():
         nombre VARCHAR(50) NOT NULL,
         descripcion VARCHAR(250) NOT NULL,
         actividades VARCHAR(250) NOT NULL,
-        costo REAL NOT NULL
+        costo VARCHAR(30) NOT NULL
     )
     ''')
     
@@ -46,7 +46,7 @@ def crear_tablas():
         nombre VARCHAR(50) NOT NULL,
         descripcion VARCHAR(50) NOT NULL,
         destinos VARCHAR(50) NOT NULL,
-        precio_total REAL NOT NULL
+        precio_total VARCHAR(30) NOT NULL
     )
     ''')
     
