@@ -1,10 +1,20 @@
 from modelo.destinos import Destino
+from modelo.bd import conectar
 
 destinos = []
 
 def agregar_destino(nombre, descripcion, actividades, costo):
+    conexion = conectar()
+    cursor = conexion.cursor()
     destino = Destino(nombre, descripcion, actividades, costo)
     destinos.append(destino)
+
+    cursor.execute('''
+    INSERT INTO Destinos (nombre, descripcion, actividades, costo) VALUES (%s,%s,%s,%s)
+    ''', (nombre, descripcion, actividades, costo))
+    
+    conexion.commit()
+    conexion.close()
 
 def mostrar_destinos():
     return destinos

@@ -34,8 +34,8 @@ def crear_tablas():
     CREATE TABLE IF NOT EXISTS Destinos (
         id INT AUTO_INCREMENT PRIMARY KEY,
         nombre VARCHAR(50) NOT NULL,
-        descripcion VARCHAR(50) NOT NULL,
-        actividades VARCHAR(50) NOT NULL,
+        descripcion VARCHAR(250) NOT NULL,
+        actividades VARCHAR(250) NOT NULL,
         costo REAL NOT NULL
     )
     ''')

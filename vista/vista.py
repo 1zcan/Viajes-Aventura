@@ -9,28 +9,28 @@ def inicio():
     print("************  Bienvenido a Viajes Aventura  ***************")
     print("***********************************************************")
     print("")
-    print("")
     print("1. Iniciar sesión")
+    print("")
     print("2. Registrarse")
     print("")
-    print("")
 
-    opcion = input()
+    opcion = input(      )
 
     if opcion == "1":
-        print("Ingrese su email:")
-        email = input()
-        print("Ingrese su contraseña:")
-        contraseña = pwinput()
+        email = input("ingrese su email: ")
+        print("")
+        contraseña = pwinput("Ingrese su contraseña: ")
+        print("")
         usuario = autenticar_usuario(email, contraseña)
 
         if usuario:
             print(f"Bienvenido, {usuario.nombre}")
+            print("")
             print("Seleccione una opción:")
+            print("")
             print("1. Vista destinos")
             print("2. Vista paquetes")
             print("3. Vista reservas")
-            print("")
             print("")
 
             op = input()
