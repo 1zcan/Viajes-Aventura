@@ -18,6 +18,7 @@ def registrar_usuario(nombre, email, contraseña):
     conexion.commit()
     conexion.close()
 
+
 def autenticar_usuario(email, contraseña):
     conexion = conectar()
     cursor = conexion.cursor()

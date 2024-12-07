@@ -12,6 +12,7 @@ def agregar_reserva(usuario_id, paquete_id, fecha_reserva):
     conexion.commit()
     conexion.close()
 
+
 def mostrar_reservas(usuario_id):
     conexion = conectar()
     cursor = conexion.cursor()
@@ -24,6 +25,7 @@ def mostrar_reservas(usuario_id):
     
     conexion.close()
     return reservas
+
 
 def eliminar_reserva(reserva_id):
     conexion = conectar()

@@ -14,6 +14,7 @@ def agregar_paquete(nombre, descripcion, destinos, fecha_inicio, fecha_fin, prec
     conexion.commit()
     conexion.close()
 
+
 def mostrar_paquetes():
     conexion = conectar()
     cursor = conexion.cursor()
@@ -23,6 +24,7 @@ def mostrar_paquetes():
     
     conexion.close()
     return paquetes
+
 
 def verificar_disponibilidad(fecha_inicio, fecha_fin):
     conexion = conectar()
@@ -37,6 +39,7 @@ def verificar_disponibilidad(fecha_inicio, fecha_fin):
     conexion.close()
     return paquetes_disponibles
 
+
 def eliminar_paquete(id):
     conexion = conectar()
     cursor = conexion.cursor()
@@ -47,6 +50,7 @@ def eliminar_paquete(id):
     
     conexion.commit()
     conexion.close()
+
 
 def modificar_paquete(id, nombre, descripcion, destinos, fecha_inicio, fecha_fin, precio_total):
     conexion = conectar()
