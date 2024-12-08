@@ -3,14 +3,17 @@ from modelo.bd import conectar
 def agregar_paquete(nombre, descripcion, destinos, fecha_inicio, fecha_fin, precio_total):
     conexion = conectar()
     cursor = conexion.cursor()
-    
-    destinos_str = ",".join(map(str, destinos))
-    
     cursor.execute('''
-    INSERT INTO Paquetes (nombre, descripcion, destinos, fecha_inicio, fecha_fin, precio_total) 
-    VALUES (%s, %s, %s, %s, %s, %s)
-    ''', (nombre, descripcion, destinos_str, fecha_inicio, fecha_fin, precio_total))
-    
+    INSERT INTO Paquetes (nombre, descripcion, fecha_inicio, fecha_fin, precio_total) 
+    VALUES (%s, %s, %s, %s, %s)
+    ''', (nombre, descripcion, fecha_inicio, fecha_fin, precio_total))
+    conexion.commit()
+    paquete_id = cursor.lastrowid
+    values_to_insert = [(paquete_id, destino_id) for destino_id in destinos]
+    query = "INSERT INTO PaquetesDestino (paquete_id, destino_id) VALUES (%s, %s)"
+
+    cursor.executemany(query, values_to_insert)
+    print("Paquete creado exitosamente!")
     conexion.commit()
     conexion.close()
 
