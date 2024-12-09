@@ -9,6 +9,7 @@ from controlador.paquetes_controlador import (
     mostrar_paquetes,
     eliminar_paquete,
     modificar_paquete,
+    mostrar_paquetes_disponibles,
 )
 from controlador.destinos_controlador import (
     agregar_destino,
@@ -105,17 +106,16 @@ def inicio():
                 elif op == "2":
                     print("Paquetes:")
                     print("")
-                    print("1. Ver paquetes")
-                    print("2. Agregar paquete")
-                    print("3. Eliminar paquete")
+                    print("1. Agregar paquete")
+                    print("2. Ver paquetes disponibles ")
+                    print("3. Mostar paquetes con destinos")
                     print("4. Modificar paquete")
+                    print("5. Eliminar paquete")
                     print("s. Salir")
                     print("")
                     op = input()
 
                     if op == "1":
-                        mostrar_paquetes()
-                    elif op == "2":
                         print("Ingrese el nombre del paquete:")
                         nombre = input()
                         print("Ingrese la descripción del paquete:")
@@ -136,33 +136,39 @@ def inicio():
                             fecha_fin,
                             precio_total,
                         )
+                        
+                    elif op == "2":
+                        mostrar_paquetes_disponibles()
                     elif op == "3":
-                        eliminar_paquete()
+                        mostrar_paquetes()
                     elif op == "4":
-                        print("Ingrese el nombre del paquete a modificar:")
-                        nombre = input()
+                        print("Ingrese el id del paquete a modificar:")
+                        paquete_id = input()
                         print("Ingrese el nuevo nombre del paquete:")
                         nuevo_nombre = input()
                         print("Ingrese la nueva descripción del paquete:")
                         nueva_descripcion = input()
-                        print("Ingrese los nuevos destinos del paquete:")
+                        print("Ingrese los nuevos destinos del paquete separados por una ',':")
                         nuevos_destinos = input()
-                        print("Ingrese la nueva fecha de inicio del paquete:")
+                        print("Ingrese la nueva fecha de inicio del paquete (yyyy-mm-dd):")
                         nueva_fecha_inicio = input()
-                        print("Ingrese la nueva fecha de fin del paquete:")
+                        print("Ingrese la nueva fecha de fin del paquete (yyyy-mm-dd):")
                         nueva_fecha_fin = input()
                         print("Ingrese el nuevo precio total del paquete:")
                         nuevo_precio_total = input()
                         modificar_paquete(
-                            nombre,
+                            paquete_id,
                             nuevo_nombre,
                             nueva_descripcion,
                             nuevos_destinos,
                             nueva_fecha_inicio,
                             nueva_fecha_fin,
                             nuevo_precio_total,
-                        )
-
+                            )
+                        
+                    elif op == "5":
+                        id = input("Ingrese el id del paquete a eliminar: ")
+                        eliminar_paquete(id)
                 elif op == "3":
                     print("Reservas:")
                     print("")

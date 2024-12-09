@@ -22,8 +22,18 @@ def mostrar_paquetes():
     conexion = conectar()
     cursor = conexion.cursor()
     
-    cursor.execute('SELECT * FROM Paquetes')
+    cursor.execute('''
+    SELECT p.nombre, GROUP_CONCAT(d.nombre SEPARATOR ', ') as destinos
+    FROM Paquetes p
+    JOIN PaquetesDestino pd ON p.id = pd.paquete_id
+    JOIN Destinos d ON pd.destino_id = d.id
+    GROUP BY p.nombre
+    ''')
+    
     paquetes = cursor.fetchall()
+    
+    for paquete in paquetes:
+        print(f"Paquete: {paquete[0]}, Destinos: {paquete[1]}")
     
     conexion.close()
     return paquetes
@@ -51,20 +61,48 @@ def eliminar_paquete(id):
     DELETE FROM Paquetes WHERE id = %s
     ''', (id,))
     
+    print("Paquete eliminado exitosamente!")
     conexion.commit()
     conexion.close()
 
 
-def modificar_paquete(id, nombre, descripcion, destinos, fecha_inicio, fecha_fin, precio_total):
+def modificar_paquete(paquete_id, nuevo_nombre, nueva_descripcion, nuevos_destinos, nueva_fecha_inicio, nueva_fecha_fin, nuevo_precio_total):
     conexion = conectar()
     cursor = conexion.cursor()
     
-    destinos_str = ",".join(map(str, destinos))
-    
+    # Actualizar los detalles del paquete
     cursor.execute('''
-    UPDATE Paquetes SET nombre = %s, descripcion = %s, destinos = %s, fecha_inicio = %s, fecha_fin = %s, precio_total = %s
+    UPDATE Paquetes
+    SET nombre = %s, descripcion = %s, fecha_inicio = %s, fecha_fin = %s, precio_total = %s
     WHERE id = %s
-    ''', (nombre, descripcion, destinos_str, fecha_inicio, fecha_fin, precio_total, id))
+    ''', (nuevo_nombre, nueva_descripcion, nueva_fecha_inicio, nueva_fecha_fin, nuevo_precio_total, paquete_id))
     
+    # Eliminar los destinos actuales del paquete
+    cursor.execute('''
+    DELETE FROM PaquetesDestino WHERE paquete_id = %s
+    ''', (paquete_id,))
+    
+    # Insertar los nuevos destinos del paquete
+    values_to_insert = [(paquete_id, destino_id) for destino_id in nuevos_destinos]
+    query = "INSERT INTO PaquetesDestino (paquete_id, destino_id) VALUES (%s, %s)"
+    cursor.executemany(query, values_to_insert)
+    
+    print("Paquete modificado exitosamente!")
     conexion.commit()
     conexion.close()
+
+
+def mostrar_paquetes_disponibles():
+    print("Ingrese la fecha de inicio deseada (yyyy-mm-dd):")
+    fecha_inicio = input()
+    print("Ingrese la fecha de fin deseada (yyyy-mm-dd):")
+    fecha_fin = input()
+    
+    paquetes_disponibles = verificar_disponibilidad(fecha_inicio, fecha_fin)
+    
+    if paquetes_disponibles:
+        print("Paquetes disponibles:")
+        for paquete in paquetes_disponibles:
+            print(paquete)
+    else:
+        print("No hay paquetes disponibles para las fechas seleccionadas.")
