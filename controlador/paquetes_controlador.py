@@ -9,6 +9,7 @@ def agregar_paquete(nombre, descripcion, destinos, fecha_inicio, fecha_fin, prec
     ''', (nombre, descripcion, fecha_inicio, fecha_fin, precio_total))
     conexion.commit()
     paquete_id = cursor.lastrowid
+    destinos = [int(destino) for destino in destinos.split(",")]
     values_to_insert = [(paquete_id, destino_id) for destino_id in destinos]
     query = "INSERT INTO PaquetesDestino (paquete_id, destino_id) VALUES (%s, %s)"
 
